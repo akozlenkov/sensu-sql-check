@@ -1,4 +1,4 @@
-module github.com/akozlenkov/go-check
+module github.com/akozlenkov/sensu-sql-check
 
 go 1.13
 
