@@ -4,8 +4,6 @@ go 1.13
 
 require (
 	github.com/ClickHouse/clickhouse-go v1.3.12
-	github.com/antlr/antlr4 v0.0.0-20191217191749-ff67971f8580 // indirect
-	github.com/antonmedv/expr v1.4.2
 	github.com/hashicorp/go-uuid v1.0.1 // indirect
 	github.com/jawher/mow.cli v1.1.0
 	github.com/jcmturner/gofork v1.0.0 // indirect

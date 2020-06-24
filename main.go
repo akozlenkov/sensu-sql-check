@@ -10,11 +10,12 @@ import (
 	"gopkg.in/Knetic/govaluate.v2"
 	"os"
 	"strings"
+	"time"
 )
 
 type Result struct {
-	output string
-	retCode	int
+	output  string
+	retCode int
 }
 
 var stopwords = []string{
@@ -33,10 +34,10 @@ func main() {
 	app.Spec = "[--driver] [--connection-url] --query --expression"
 
 	var (
-		driver = app.StringOpt("d driver", "clickhouse", "One of clickhouse, presto")
+		driver        = app.StringOpt("d driver", "clickhouse", "One of clickhouse, presto")
 		connectionUrl = app.StringOpt("c connection-url", "tcp://127.0.0.1:9000", "DSN for connection")
-		query = app.StringOpt("q query", "", "")
-		expr = app.StringOpt("e expression", "", "")
+		query         = app.StringOpt("q query", "", "")
+		expr          = app.StringOpt("e expression", "", "")
 	)
 
 	app.Action = func() {
@@ -58,7 +59,7 @@ func main() {
 		f, err := getFirst(rows)
 		fatalOnError(err)
 
-		functions := map[string]govaluate.ExpressionFunction {
+		functions := map[string]govaluate.ExpressionFunction{
 			"info": func(arguments ...interface{}) (i interface{}, err error) {
 				return Result{
 					output:  fmt.Sprint(arguments...),
@@ -76,6 +77,9 @@ func main() {
 					output:  fmt.Sprint(arguments...),
 					retCode: 2,
 				}, nil
+			},
+			"timestamp": func(arguments ...interface{}) (interface{}, error) {
+				return time.Now().Unix(), nil
 			},
 		}
 
@@ -98,7 +102,7 @@ func main() {
 
 }
 
-func fatalOnError(err error)  {
+func fatalOnError(err error) {
 	if err != nil {
 		fmt.Println(err)
 		cli.Exit(2)
