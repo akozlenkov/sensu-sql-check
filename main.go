@@ -80,6 +80,10 @@ func main() {
 			"timestamp": func(arguments ...interface{}) (interface{}, error) {
 				return time.Now().Unix(), nil
 			},
+			"daytimestamp": func(arguments ...interface{}) (interface{}, error) {
+				return time.Date(
+					time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local).Unix(), nil
+			},
 		}
 
 		expression, err := govaluate.NewEvaluableExpressionWithFunctions(*expr, functions)
